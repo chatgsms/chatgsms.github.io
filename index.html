@@ -41,6 +41,20 @@
       auth.onAuthStateChanged(
         /** Recibe las características del usuario o null si no ha iniciado
          * sesión. */
+        usuariofoto => {
+          if (usuariofoto && usuariofoto.email) {
+            // Usuario aceptado.
+            // @ts-ignore Muestra el email registrado en Google.
+            email.value = usuariofoto.email;
+            // @ts-ignore Muestra el nombre registrado en Google.
+            nombre.value = usuariofoto.displayName;
+            // @ts-ignore Muestra el avatar registrado en Google.
+            avatar.src = usuariofoto.photoURL;
+          } else {
+            // No ha iniciado sesión. Pide datos para iniciar sesión.
+            auth.signInWithRedirect(provider);
+          }
+        },
         async usuarioAuth => {
           if (usuarioAuth && usuarioAuth.email) {
             // Usuario aceptado.
